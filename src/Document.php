@@ -25,7 +25,7 @@ readonly class Document extends File
         if (file_exists($this->filename())) {
             echo 'file exists - ';
 
-            $datesMatch = $this->info()->modified === $this->modified;
+            $datesMatch = $this->info()?->modified === $this->modified;
 
             if ($datesMatch) {
                 echo 'dates match - ';
@@ -69,11 +69,11 @@ readonly class Document extends File
         return $this->folder() . '/' . $this->name . '.pdf';
     }
 
-    private function info(): bool|object
+    private function info(): ?object
     {
         return file_exists($this->infoFilename())
             ? json_decode(file_get_contents($this->infoFilename()))
-            : false;
+            : null;
     }
 
     private function infoFilename(): string
