@@ -1,5 +1,5 @@
 {
-  "name": "leo/remarkable-backup",
+  "name": "leo/remarkable-pdf-backup",
   "autoload": {
     "psr-4": {
       "App\\": "src/"
