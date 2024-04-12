@@ -45,7 +45,7 @@ readonly class Document extends File
 
         $pdf = $this->downloadFile();
 
-        if($pdf === false) {
+        if ($pdf === false) {
             die('network fetch error');
         }
 
@@ -66,7 +66,7 @@ readonly class Document extends File
 
     private function filename(): string
     {
-        return $this->folder() . '/' . $this->name . ' - ' . $this->id . '.pdf';
+        return $this->folder() . '/' . $this->name . '.pdf';
     }
 
     private function info(): bool|object
