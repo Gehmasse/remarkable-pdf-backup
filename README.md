@@ -1,7 +1,13 @@
 # reMarkable PDF backup
 
+## Prerequisites
+
+- PHP is installed (tested only with version 8.3)
+- composer is installed
+
 ## Usage
 
+- install packages with `composer install`.
 - Connect your reMarkable device via USB.
 - Activate the USB web interfaca.
 - Run `php index.php` in project root.
