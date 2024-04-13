@@ -61,7 +61,7 @@ readonly class Document extends File
 
     private function folder(): string
     {
-        return STORAGE . '/files/' . $this->path;
+        return $_ENV['storage'] . '/files/' . $this->path;
     }
 
     private function filename(): string
@@ -78,7 +78,7 @@ readonly class Document extends File
 
     private function infoFilename(): string
     {
-        return STORAGE . '/info/' . $this->id . '.json';
+        return $_ENV['storage'] . '/info/' . $this->id . '.json';
     }
 
     private function ensureFolder(): void

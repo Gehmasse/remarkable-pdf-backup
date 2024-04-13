@@ -4,11 +4,11 @@ use App\Backuper;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-const STORAGE = __DIR__ . '/storage';
+$_ENV = require 'env.php';
 
-if (!file_exists(STORAGE)) mkdir(STORAGE, recursive: true);
-if (!file_exists(STORAGE . '/files')) mkdir(STORAGE . '/files', recursive: true);
-if (!file_exists(STORAGE . '/info')) mkdir(STORAGE . '/info', recursive: true);
+if (!file_exists($_ENV['storage'])) mkdir($_ENV['storage'], recursive: true);
+if (!file_exists($_ENV['storage'] . '/files')) mkdir($_ENV['storage'] . '/files', recursive: true);
+if (!file_exists($_ENV['storage'] . '/info')) mkdir($_ENV['storage'] . '/info', recursive: true);
 
 $backuper = new Backuper();
 
