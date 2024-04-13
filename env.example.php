@@ -1,5 +1,5 @@
 <?php
 
 return [
-    '$_ENV['storage']' => '/home/user/remarkable',
+    'storage' => '/home/user/remarkable',
 ];

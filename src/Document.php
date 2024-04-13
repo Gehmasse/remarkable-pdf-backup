@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Throwable;
-
 readonly class Document extends File
 {
 
