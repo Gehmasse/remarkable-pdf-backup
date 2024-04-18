@@ -11,7 +11,7 @@
 - Install packages with `composer install`.
 - Connect your reMarkable device via USB.
 - Activate the USB web interfaca.
-- Run `php index.php` in project root.
+- Run `php index.php sync` in project root.
 
 ## Possible problems
 
