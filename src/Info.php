@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Support\Collection;
 
-class Info
+readonly class Info
 {
     private function __construct(private string $id)
     {
