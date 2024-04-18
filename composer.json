@@ -13,6 +13,7 @@
   ],
   "require": {
     "illuminate/support": "^11.3",
-    "ext-json": "*"
+    "ext-json": "*",
+    "phalcon/cli-options-parser": "^2.0"
   }
 }

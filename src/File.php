@@ -6,7 +6,6 @@ use App\Exceptions\UnsupportedFileTypeException;
 
 abstract readonly class File
 {
-
     public bool $bookmarked;
     public string $id;
     public string $name;

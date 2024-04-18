@@ -4,7 +4,6 @@ namespace App;
 
 readonly class Document extends File
 {
-
     public string $modified;
 
     public function __construct(object $file, string $path)
@@ -23,7 +22,7 @@ readonly class Document extends File
         if (file_exists($this->filename())) {
             echo 'file exists - ';
 
-            $datesMatch = $this->info()?->modified === $this->modified;
+            $datesMatch = $this->info()?->modified() === $this->modified;
 
             if ($datesMatch) {
                 echo 'dates match - ';
@@ -41,7 +40,7 @@ readonly class Document extends File
 
         echo 'starting download' . PHP_EOL;
 
-        $pdf = $this->downloadFile();
+        $pdf = $this->download();
 
         if ($pdf === false) {
             die('network fetch error');
@@ -67,16 +66,9 @@ readonly class Document extends File
         return $this->folder() . '/' . $this->name . '.pdf';
     }
 
-    private function info(): ?object
+    private function info(): ?Info
     {
-        return file_exists($this->infoFilename())
-            ? json_decode(file_get_contents($this->infoFilename()))
-            : null;
-    }
-
-    private function infoFilename(): string
-    {
-        return $_ENV['storage'] . '/info/' . $this->id . '.json';
+        return Info::make($this->id);
     }
 
     private function ensureFolder(): void
@@ -93,12 +85,11 @@ readonly class Document extends File
 
     private function storeInfo(): void
     {
-        file_put_contents($this->infoFilename(), json_encode($this));
+        Info::store($this->id, $this);
     }
 
-    private function downloadFile(): string|false
+    private function download(): string|false
     {
         return file_get_contents('http://10.11.99.1/download/' . $this->id . '/placeholder');
-
     }
 }
