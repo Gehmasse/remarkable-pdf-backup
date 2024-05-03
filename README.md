@@ -10,7 +10,7 @@
 - Copy env.example.php to env.php and adjust settings.
 - Install packages with `composer install`.
 - Connect your reMarkable device via USB.
-- Activate the USB web interfaca.
+- Activate the USB web interface.
 - Run `php index.php sync` in project root.
 
 ## Possible problems
