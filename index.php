@@ -2,14 +2,15 @@
 
 use App\Backuper;
 use Phalcon\Cop\Parser;
+use App\Directory;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 $_ENV = require 'env.php';
 
-if (!file_exists($_ENV['storage'])) mkdir($_ENV['storage'], recursive: true);
-if (!file_exists($_ENV['storage'] . '/files')) mkdir($_ENV['storage'] . '/files', recursive: true);
-if (!file_exists($_ENV['storage'] . '/info')) mkdir($_ENV['storage'] . '/info', recursive: true);
+Directory::ensure($_ENV['storage']);
+Directory::ensure($_ENV['storage'] . '/files');
+Directory::ensure($_ENV['storage'] . '/info');
 
 $parser = new Parser();
 $params = $parser->parse($argv);
