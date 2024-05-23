@@ -6,7 +6,6 @@ use Illuminate\Support\Collection;
 
 class Backuper
 {
-
     public function syncAll(): Collection
     {
         $json = file_get_contents('http://10.11.99.1/documents/');
@@ -22,12 +21,13 @@ class Backuper
 
         $existingIds = collect(json_decode($json))
             ->map(fn(object $file) => File::make($file, ''))
-            ->map(fn(File $file) => $file->id);
+            ->map(fn(File $file) => $file->idList())
+            ->flatten();
 
         Info::all()->each(function (Info $info) use ($existingIds) {
             if (!$existingIds->contains($info->id())) {
-                echo 'deleting ' . $info->id() . PHP_EOL;
-//                $info->deleteFileAndInfo();
+                echo 'deleting ' . $info->id() . ' - ' . $info->documentFile() . PHP_EOL;
+                $info->deleteFileAndInfo();
             }
         });
     }

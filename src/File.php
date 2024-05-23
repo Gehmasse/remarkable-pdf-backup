@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Exceptions\UnsupportedFileTypeException;
+use Illuminate\Support\Collection;
 
 abstract readonly class File
 {
@@ -34,4 +35,6 @@ abstract readonly class File
     }
 
     abstract public function save(): void;
+
+    abstract public function idList(): Collection;
 }

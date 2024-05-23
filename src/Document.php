@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Illuminate\Support\Collection;
+use Override;
+
 readonly class Document extends File
 {
     public string $modified;
@@ -13,6 +16,7 @@ readonly class Document extends File
         $this->modified = $file->ModifiedClient;
     }
 
+    #[Override]
     public function save(): void
     {
         echo '---' . PHP_EOL;
@@ -91,5 +95,11 @@ readonly class Document extends File
     private function download(): string|false
     {
         return file_get_contents('http://10.11.99.1/download/' . $this->id . '/placeholder');
+    }
+
+    #[Override]
+    public function idList(): Collection
+    {
+        return collect($this->id);
     }
 }
