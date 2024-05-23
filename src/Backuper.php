@@ -8,21 +8,13 @@ class Backuper
 {
     public function syncAll(): Collection
     {
-        $json = file_get_contents('http://10.11.99.1/documents/');
-
-        return collect(json_decode($json))
-            ->map(fn(object $file) => File::make($file, ''))
+        return Request::root()
             ->each(fn(File $file) => $file->save());
     }
 
     public function handleDeletions(): void
     {
-        $json = file_get_contents('http://10.11.99.1/documents/');
-
-        $existingIds = collect(json_decode($json))
-            ->map(fn(object $file) => File::make($file, ''))
-            ->map(fn(File $file) => $file->idList())
-            ->flatten();
+        $existingIds = Request::documentIds();
 
         Info::all()->each(function (Info $info) use ($existingIds) {
             if (!$existingIds->contains($info->id())) {
@@ -36,7 +28,7 @@ class Backuper
     {
         Info::all()->each(function (Info $info) {
             if (!$info->documentExists()) {
-                echo 'delete info file ' . $info->id() . ' for ' . $info->documentFile() . PHP_EOL;
+                echo 'deleting info file ' . $info->id() . ' - ' . $info->documentFile() . PHP_EOL;
                 $info->deleteInfoFile();
             }
         });

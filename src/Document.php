@@ -28,11 +28,7 @@ readonly class Document extends File
 
             $datesMatch = $this->info()?->modified() === $this->modified;
 
-            if ($datesMatch) {
-                echo 'dates match - ';
-            } else {
-                echo 'dates differ - ';
-            }
+            echo $datesMatch ? 'dates match - ' : 'dates differ - ';
 
             if ($datesMatch) {
                 echo 'skip' . PHP_EOL;
@@ -50,14 +46,13 @@ readonly class Document extends File
             die('network fetch error');
         }
 
-        $this->ensureFolder();
+        Directory::ensure($this->folder());
 
         $this->store($pdf);
 
         $this->storeInfo();
 
         echo 'finished with success' . PHP_EOL;
-
     }
 
     private function folder(): string
@@ -73,13 +68,6 @@ readonly class Document extends File
     private function info(): ?Info
     {
         return Info::make($this->id);
-    }
-
-    private function ensureFolder(): void
-    {
-        if (!file_exists($this->folder())) {
-            mkdir($this->folder(), recursive: true);
-        }
     }
 
     private function store(false|string $pdf): void
