@@ -19,7 +19,8 @@ $backuper = new Backuper();
 match ($parser->get(0)) {
     'sync' => $backuper->syncAll(),
     'clean' => $backuper->cleanInfoFiles(),
+    'delete' => $backuper->handleDeletions(),
     default => (function () {
-        echo 'invalid option, try "sync" or "clean".';
+        echo 'invalid option, try "php index.php {sync|clean|delete}".';
     })(),
 };

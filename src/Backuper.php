@@ -18,7 +18,18 @@ class Backuper
 
     public function handleDeletions(): void
     {
+        $json = file_get_contents('http://10.11.99.1/documents/');
 
+        $existingIds = collect(json_decode($json))
+            ->map(fn(object $file) => File::make($file, ''))
+            ->map(fn(File $file) => $file->id);
+
+        Info::all()->each(function (Info $info) use ($existingIds) {
+            if (!$existingIds->contains($info->id())) {
+                echo 'deleting ' . $info->id() . PHP_EOL;
+//                $info->deleteFileAndInfo();
+            }
+        });
     }
 
     public function cleanInfoFiles(): void

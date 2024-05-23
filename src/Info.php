@@ -74,4 +74,15 @@ readonly class Info
     {
         unlink($this->filename());
     }
+
+    public function deleteFileAndInfo(): void
+    {
+        $this->deleteDocumentFile();
+        $this->deleteInfoFile();
+    }
+
+    private function deleteDocumentFile(): void
+    {
+        unlink($this->documentFile());
+    }
 }
