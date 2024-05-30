@@ -25,3 +25,6 @@ match ($parser->get(0)) {
         echo 'invalid option, try "php index.php {sync|clean|delete}".';
     })(),
 };
+
+echo PHP_EOL;
+
