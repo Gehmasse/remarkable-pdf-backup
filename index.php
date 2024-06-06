@@ -1,8 +1,9 @@
 <?php
 
 use App\Backuper;
-use Phalcon\Cop\Parser;
 use App\Directory;
+use App\Exceptions\NetworkException;
+use Phalcon\Cop\Parser;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -17,14 +18,19 @@ $params = $parser->parse($argv);
 
 $backuper = new Backuper();
 
-match ($parser->get(0)) {
-    'sync' => $backuper->syncAll(),
-    'clean' => $backuper->cleanInfoFiles(),
-    'delete' => $backuper->handleDeletions(),
-    default => (function () {
-        echo 'invalid option, try "php index.php {sync|clean|delete}".';
-    })(),
-};
+try {
+    match ($parser->get(0)) {
+        'run' => $backuper->run(),
+        'sync' => $backuper->syncAll(),
+        'clean' => $backuper->cleanInfoFiles(),
+        'delete' => $backuper->handleDeletions(),
+        default => (function () {
+            echo 'invalid option, try "php index.php {sync|clean|delete}".';
+        })(),
+    };
+} catch (NetworkException $e) {
+    die('network exception');
+}
 
 echo PHP_EOL;
 

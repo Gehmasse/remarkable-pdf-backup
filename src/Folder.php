@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Exceptions\NetworkException;
 use Illuminate\Support\Collection;
 use Override;
 
@@ -12,6 +13,9 @@ readonly class Folder extends File
         parent::__construct($file, $path . '/' . $file->VissibleName);
     }
 
+    /**
+     * @throws NetworkException
+     */
     #[Override]
     public function save(): void
     {
@@ -19,6 +23,9 @@ readonly class Folder extends File
             ->each(fn(File $file) => $file->save());
     }
 
+    /**
+     * @throws NetworkException
+     */
     #[Override]
     public function idList(): Collection
     {

@@ -40,10 +40,10 @@ readonly class Document extends File
 
         echo 'starting download' . PHP_EOL;
 
-        $pdf = $this->download();
-
-        if ($pdf === false) {
-            die('network fetch error');
+        try {
+            $pdf = Request::document($this);
+        } catch (Exceptions\NetworkException) {
+            die('network exception');
         }
 
         Directory::ensure($this->folder());
@@ -70,7 +70,7 @@ readonly class Document extends File
         return Info::make($this->id);
     }
 
-    private function store(false|string $pdf): void
+    private function store(string $pdf): void
     {
         file_put_contents($this->filename(), $pdf);
     }
@@ -78,11 +78,6 @@ readonly class Document extends File
     private function storeInfo(): void
     {
         Info::store($this->id, $this);
-    }
-
-    private function download(): string|false
-    {
-        return file_get_contents('http://10.11.99.1/download/' . $this->id . '/placeholder');
     }
 
     #[Override]

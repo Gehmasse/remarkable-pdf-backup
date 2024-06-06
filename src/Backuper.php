@@ -2,16 +2,23 @@
 
 namespace App;
 
+use App\Exceptions\NetworkException;
 use Illuminate\Support\Collection;
 
 class Backuper
 {
+    /**
+     * @throws NetworkException
+     */
     public function syncAll(): Collection
     {
         return Request::root()
             ->each(fn(File $file) => $file->save());
     }
 
+    /**
+     * @throws NetworkException
+     */
     public function handleDeletions(): void
     {
         $existingIds = Request::documentIds();
@@ -32,5 +39,12 @@ class Backuper
                 $info->deleteInfoFile();
             }
         });
+    }
+
+    public function run(): void
+    {
+        $this->syncAll();
+        $this->handleDeletions();
+        $this->cleanInfoFiles();
     }
 }
