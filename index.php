@@ -25,7 +25,7 @@ try {
         'clean' => $backuper->cleanInfoFiles(),
         'delete' => $backuper->handleDeletions(),
         default => (function () {
-            echo 'invalid option, try "php index.php {sync|clean|delete}".';
+            echo 'invalid option, try "php index.php {sync|clean|delete|run}".';
         })(),
     };
 } catch (NetworkException $e) {
