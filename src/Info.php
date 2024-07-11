@@ -83,6 +83,8 @@ readonly class Info
 
     private function deleteDocumentFile(): void
     {
-        unlink($this->documentFile());
+        if(file_exists($this->documentFile())) {
+            unlink($this->documentFile());
+        }
     }
 }
